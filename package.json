@@ -41,6 +41,9 @@
     "sinon-chai": "^3.3.0"
   },
   "dependencies": {
+    "@sparkpost/msys-middleware": "^3.5.0",
+    "@sparkpost/msys-passwords": "^1.2.2",
+    "@sparkpost/msys-rabbitmq": "^2.0.1",
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "pino": "^5.12.5",
