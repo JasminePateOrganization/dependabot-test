@@ -44,7 +44,7 @@
     "@sparkpost/msys-middleware": "^3.5.0",
     "@sparkpost/msys-passwords": "^1.2.2",
     "@sparkpost/msys-rabbitmq": "^2.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "lodash": "^4.17.11",
     "pino": "^5.12.5",
     "pino-pretty": "^2.5.0"
