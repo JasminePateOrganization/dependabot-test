@@ -1,0 +1,45 @@
+version: 2
+registries:
+  sparkpost-npm:
+    type: npm-registry
+    url: https://registry.npmjs.org
+    username: sparkpost
+    password: ${{secrets.NPM_PASSWORD}}
+updates:
+  - package-ecosystem: "npm"
+    directory: “/“
+    registries: 
+      - sparkpost-npm
+    rebase-strategy: "auto"
+    schedule:
+      interval: daily
+      time: "13:00"
+    allow:
+      - dependency-type: "all"
+    labels:
+      - "dependabot"
+      - "auto-request"
+
+  - package-ecosystem: terraform
+      directory: “/“
+      rebase-strategy: "auto"
+      schedule:
+        interval: daily
+        time: "13:00"
+      allow:
+        - dependency-type: "all"
+      labels:
+        - "dependabot"
+        - "auto-request"
+
+  - package-ecosystem: "pip"
+      directory: “/“
+      rebase-strategy: "auto"
+      schedule:
+        interval: daily
+        time: "13:00"
+      allow:
+        - dependency-type: "all"
+      labels:
+        - "dependabot"
+        - "auto-request"
