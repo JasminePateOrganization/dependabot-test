@@ -25,3 +25,4 @@ if: github.actor == 'dependabot[bot]'
               pull_number: context.payload.pull_request.number
             })
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
+
