@@ -9,7 +9,19 @@
     "@sparkpost/msys-middleware": "3.0.1",
     "@sparkpost/msys-rabbitmq": "2.0.1",
     "@sparkpost/msys-test-suite": "3.1.0",
-    "lodash": "4.17.0"
+    "axios": "0.21.1",
+    "aws-sdk": "2.384.0",
+    "bluebird": "3.5.3",
+    "config": "3.0.1",
+    "elasticsearch": "15.3.0",
+    "lodash": "4.17.11",
+    "moment": "2.23.0",
+    "pino": "5.10.6",
+    "pino-tee": "0.2.2",
+    "prompts": "2.0.1",
+    "proxy-agent": "3.0.3",
+    "stdio": "0.2.7",
+    "uuid": "3.3.2"
   },
   "devDependencies": {},
   "scripts": {
