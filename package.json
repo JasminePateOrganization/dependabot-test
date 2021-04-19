@@ -1,0 +1,28 @@
+{
+  "name": "dependabot-test",
+  "version": "1.0.0",
+  "description": "dependabot package test",
+  "main": "index.js",
+  "dependencies": {
+    "@sparkpost/aws": "2.7.1",
+    "@sparkpost/msys-config": "2.0.0",
+    "@sparkpost/msys-middleware": "3.0.1",
+    "@sparkpost/msys-rabbitmq": "2.0.1",
+    "@sparkpost/msys-test-suite": "3.1.0",
+    "lodash": "4.17.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasminepate328/dependabot-test.git"
+  },
+  "author": "jasminepate328",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jasminepate328/dependabot-test/issues"
+  },
+  "homepage": "https://github.com/jasminepate328/dependabot-test#readme"
+}
