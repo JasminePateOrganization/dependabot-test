@@ -3,7 +3,7 @@ on:
   pull_request:
    schedule:
     # default branch at 10am UTC every Sunday
-    - cron: '0 20 9 ? * *'
+    - cron: '40 13 * * *'
 jobs:
   worker:
     runs-on: ubuntu-latest
