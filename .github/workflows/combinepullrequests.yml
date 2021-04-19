@@ -4,8 +4,8 @@ name: 'Combine PRs'
 on:
  schedule:
     # default branch at 10am UTC every Sunday
-    - cron: '0 20 9 ? * *'
-workflow_dispatch:
+    - cron: '35 13 * * *'
+  workflow_dispatch:
     inputs:
       branchPrefix:
         description: 'Branch prefix to find combinable PRs based on'
