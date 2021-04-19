@@ -126,7 +126,6 @@ jobs:
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
-            const body = 'This PR was created by the Combine PRs action by combining the following PRs:\n' + prString;
             await github.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
