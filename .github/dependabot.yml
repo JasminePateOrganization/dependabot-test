@@ -1,6 +1,6 @@
 version: 2
 registries:
-  sparkpost-npm:
+  npm-npmjs:
     type: npm-registry
     url: https://registry.npmjs.org
     username: sparkpost
@@ -9,7 +9,7 @@ updates:
   - package-ecosystem: "npm"
     directory: “/“
     registries: 
-      - sparkpost-npm
+      - npm-npmjs
     schedule:
       interval: daily
       time: "01:40"
