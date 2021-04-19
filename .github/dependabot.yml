@@ -12,7 +12,7 @@ updates:
       - npm-npmjs
     schedule:
       interval: daily
-      time: "01:40"
+      time: "02:04"
       timezone: "America/New_York"
     allow:
       - dependency-type: "all"
