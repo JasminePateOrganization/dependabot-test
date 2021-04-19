@@ -4,7 +4,7 @@ name: 'Combine PRs'
 on:
   schedule:
     # default branch at 10am UTC every Sunday
-    - cron: '35 13 * * *'
+    - cron: '45 14 * * *'
   workflow_dispatch:
     inputs:
       branchPrefix:
