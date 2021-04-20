@@ -131,6 +131,7 @@ jobs:
           script: | 
               const pr_ids = `${{ steps.fetch-branch-names.outputs.pr_ids}}`
               for (const id of pr_ids) {
+              console.log('Closing PR #' + id);
                 await github.pulls.update({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
