@@ -5,8 +5,6 @@ on:
   schedule:
     # default branch at 10am UTC every Sunday
     - cron: '35 13 * * *'
-  push:
-    branches: [ main ]
   workflow_dispatch:
     inputs:
       branchPrefix:
