@@ -14,7 +14,7 @@
     "bluebird": "3.5.3",
     "config": "3.0.1",
     "elasticsearch": "15.3.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "moment": "2.23.0",
     "pino": "5.10.6",
     "pino-tee": "0.2.2",
