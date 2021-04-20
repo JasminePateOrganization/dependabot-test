@@ -130,13 +130,13 @@ jobs:
         name: Close Single Pull Requests
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
-          script: |
-            const pr_ids = `${{ steps.fetch-branch-names.outputs.pr_ids}}`;
-            for (const id of pr_ids) {
-            await github.pulls.update({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: id,
-              state: 'closed'
-            });      
-          }
+          script: | 
+              const pr_ids = `${{ steps.fetch-branch-names.outputs.pr_ids}}`
+              for (const id of pr_ids) {
+                await github.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: id,
+                  state: 'closed'
+                });      
+              }
