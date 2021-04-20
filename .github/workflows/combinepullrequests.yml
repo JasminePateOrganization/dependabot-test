@@ -5,6 +5,8 @@ on:
   schedule:
     # default branch at 10am UTC every Sunday
     - cron: '35 13 * * *'
+  push:
+    branches: [ main ]
   workflow_dispatch:
     inputs:
       branchPrefix:
@@ -76,11 +78,10 @@ jobs:
 
             core.setOutput('base-branch', base_branch);
             core.setOutput('prs-string', prs.join('\n'));
-            core.setOutput('pr-ids', pr_ids);
+            core.setOutput('pr-ids', pr_ids.join('\n'));
             
             combined = branches.join(' ')
             console.log('Combined: ' + combined);
-            console.log('PR_IDS', pr_ids);
             return combined
       # Checks-out your repository under $WORKSPACE, so your job can access it
       - uses: actions/checkout@v2.3.3
@@ -130,10 +131,12 @@ jobs:
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
-           console.log('PR_IDS2222', '${{ steps.fetch-branch-names.outputs.pr_ids}}');
+            const pr_ids = `${{ steps.fetch-branch-names.outputs.pr_ids}}`;
+            for (const id of pr_ids) {
             await github.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: '${{ steps.fetch-branch-names.outputs.pr_ids}}',
+              pull_number: id,
               state: 'closed'
-            });
+            });      
+          }
