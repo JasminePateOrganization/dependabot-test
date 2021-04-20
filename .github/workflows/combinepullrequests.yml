@@ -46,6 +46,9 @@ jobs:
             for (const pull of pulls) {
               const branch = pull['head']['ref'];
               console.log('Pull for branch: ' + branch);
+              if (branch.startsWith('${{ github.event.inputs.branchPrefix }}')) {
+                console.log('Branch matched: ' + branch);
+                statusOK = true;
                 console.log('Checking labels: ' + branch);
                 const labels = pull['labels'];
                 for(const label of labels) {
@@ -73,7 +76,7 @@ jobs:
 
             core.setOutput('base-branch', base_branch);
             core.setOutput('prs-string', prs.join('\n'));
-            core.setOutput('pr-ids' pr_ids, 
+            core.setOutput('pr-ids' pr_ids);
             
             combined = branches.join(' ')
             console.log('Combined: ' + combined);
