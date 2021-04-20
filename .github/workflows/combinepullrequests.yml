@@ -80,6 +80,7 @@ jobs:
             
             combined = branches.join(' ')
             console.log('Combined: ' + combined);
+            console.log('PR_IDS', pr_ids);
             return combined
       # Checks-out your repository under $WORKSPACE, so your job can access it
       - uses: actions/checkout@v2.3.3
@@ -129,6 +130,7 @@ jobs:
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
+           console.log('PR_IDS2222', '${{ steps.fetch-branch-names.outputs.pr_ids}}');
             await github.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
