@@ -4,7 +4,7 @@ name: 'Combine PRs'
 on:
   schedule:
     # default branch at 10am UTC every Sunday
-    - cron: '45 14 * * *'
+    - cron: '35 13 * * *'
   workflow_dispatch:
     inputs:
       branchPrefix:
@@ -41,13 +41,11 @@ jobs:
             });
             branches = [];
             prs = [];
+            pr_ids = [];
             base_branch = null;
             for (const pull of pulls) {
               const branch = pull['head']['ref'];
               console.log('Pull for branch: ' + branch);
-              if (branch.startsWith('${{ github.event.inputs.branchPrefix }}')) {
-                console.log('Branch matched: ' + branch);
-                statusOK = true;
                 console.log('Checking labels: ' + branch);
                 const labels = pull['labels'];
                 for(const label of labels) {
@@ -62,6 +60,7 @@ jobs:
                   console.log('Adding branch to array: ' + branch);
                   branches.push(branch);
                   prs.push('#' + pull['number'] + ' ' + pull['title']);
+                  pr_ids.push(pull['number']);
                   base_branch = pull['base']['ref'];
                 }
               }
@@ -74,6 +73,7 @@ jobs:
 
             core.setOutput('base-branch', base_branch);
             core.setOutput('prs-string', prs.join('\n'));
+            core.setOutput('pr-ids' pr_ids, 
             
             combined = branches.join(' ')
             console.log('Combined: ' + combined);
@@ -120,6 +120,12 @@ jobs:
               base: '${{ steps.fetch-branch-names.outputs.base-branch }}',
               body: body
             });
+      # close all previously created PRs
+      - uses: actions/github-script@v3
+        name: Close Single Pull Requests
+        with:
+          github-token: ${{secrets.DEPENDABOT_TOKEN}}
+          script: |
             await github.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
