@@ -129,7 +129,7 @@ jobs:
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: | 
-              const pr_ids = '${{ steps.fetch-branch-names.outputs.pr-ids}}'
+              const pr_ids = ${{ steps.fetch-branch-names.outputs.pr-ids}}
               for (const id of pr_ids) {
               console.log('Closing PR #' + id);
                 await github.pulls.update({
