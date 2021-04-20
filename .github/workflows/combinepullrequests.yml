@@ -120,12 +120,6 @@ jobs:
               base: '${{ steps.fetch-branch-names.outputs.base-branch }}',
               body: body
             });
-        # close all previously created PRs
-      - uses: actions/github-script@v3
-        name: Close Single Pull Requests
-        with:
-          github-token: ${{secrets.DEPENDABOT_TOKEN}}
-          script: |
             await github.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
