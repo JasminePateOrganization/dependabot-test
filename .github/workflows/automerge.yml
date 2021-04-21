@@ -5,10 +5,11 @@ on:
   schedule:
     - cron: '40 13 * * *'
   workflow_dispatch:
-    combineBranchName:
-        description: 'Name of the branch to merge'
-        required: true
-        default: 'combine-prs-branch'
+    inputs:
+      combineBranchName:
+          description: 'Name of the branch to merge'
+          required: true
+          default: 'combine-prs-branch'
 jobs:
   automerge-prs:
     runs-on: ubuntu-latest
@@ -16,8 +17,6 @@ jobs:
     # get the names of the pull requests to merge
       - uses: actions/github-script@v3
         name: Auto Merge Dependabot Pull Requests
-        env:
-          COMBINE_BRANCH_NAME: 'combine-prs-branch'
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
@@ -27,7 +26,7 @@ jobs:
             });
             for (const pull of pulls) {
               const branchName = pull['head']['ref'] 
-              if (github.actor == 'dependabot[bot]' || branchName == $COMBINE_BRANCH_NAME) {
+              if (github.actor == 'dependabot[bot]' || branchName == 'combine-prs-branch') {
                 github.pullRequests.createReview({
                 owner: context.payload.repository.owner.login,
                 repo: context.payload.repository.name,
