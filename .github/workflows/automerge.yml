@@ -1,7 +1,7 @@
 name: "Dependabot Automerge"
 on: 
   pull_request:
-    types: opened
+    types: [opened]
   schedule:
     - cron: '40 13 * * *'
   workflow_dispatch:
@@ -10,6 +10,7 @@ on:
           description: 'Name of the branch to merge'
           required: true
           default: 'combine-prs-branch'
+
 jobs:
   automerge-prs:
     runs-on: ubuntu-latest
@@ -20,24 +21,45 @@ jobs:
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
             const pulls = await github.paginate('GET /repos/:owner/:repo/pulls', {
-              owner: context.repo.owner,
-              repo: context.repo.repo
+              owner,
+              repo
             });
+
             for (const pull of pulls) {
               const branchName = pull['head']['ref'] 
-              if (github.actor == 'dependabot[bot]' || branchName == 'combine-prs-branch') {
-                github.pullRequests.createReview({
-                owner: context.payload.repository.owner.login,
-                repo: context.payload.repository.name,
-                pull_number: context.payload.pull_request.number,
-                event: 'APPROVE'
-              })
-              github.pullRequests.merge({
-                owner: context.payload.repository.owner.login,
-                repo: context.payload.repository.name,
-                pull_number: context.payload.pull_request.number
-              })
+              const pull_number = pull['number']
+              if (github.actor == 'dependabot[bot]' || branchName == ${{ github.event.inputs.combineBranchName }}) {
+                await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
+                  owner,
+                  repo,
+                  pull_number,
+                  event: 'APPROVE'
+                });
+
+                await github.request('PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge', {
+                  owner,
+                  repo,
+                  pull_number,
+                });
+              }
             }
-            }
+
+      # send message to slack respected channel to notify a dependabot PR has auto merged. 
+      - uses: actions/checkout@v2
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: 'Jasmine Pate'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: 'ATTENTION: Dependabot auto-merge triggered'
+          SLACK_COLOR: '#F32013'
+          SLACK_USERNAME: 'Dependabot'
+
+
+
+
+
    
