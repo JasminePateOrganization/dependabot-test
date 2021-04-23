@@ -47,22 +47,28 @@ jobs:
                 });
               }
             }
-            return branchName
+            return (pulls > 0)
 
       # send message to slack respected channel to notify a dependabot PR has auto merged. 
       - uses: 8398a7/action-slack@v3
+        name: Slack Notification
+        if: ${{ steps.fetch-branch-names.outputs.result }} && always() 
         with:
           status: custom
-          fields: repo,workflow,job,author,took
+          fields: repo,workflow,job,author,took,commit
           custom_payload: |
             {
-              username: 'Dependabot',
-              icon_emoji: ':warning:',
+              username: 'Dependabot'
+              icon_emoji: ':warning:'
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `Action Required:exclamation:\n Security vulnerabilities auto-merged and ready for deployment.\n${process.env.AS_REPO} - ${{ job.status }} in ${process.env.AS_TOOK}`,
+                text: `Action Required:exclamation:\nSecurity vulnerabilities auto-merged and ready for deployment.\n${process.env.AS_REPO} - ${{ job.status }} in ${process.env.AS_TOOK}`,
               }]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() 
+
+
+
+
+   
