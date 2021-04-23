@@ -27,13 +27,11 @@ jobs:
             });
 
             for (const pull of pulls) {
-              const branchName = pull['head']['ref'];
-              const pull_number = pull['number'];
-              const isDependabot = (github.actor == 'dependabot[bot]');
-              console.log('github.actor', github.actor);
-              console.log('isDependabot', isDependabot);
-              if (isDependabot || branchName == '${{ github.event.inputs.combineBranchName }}') {
-                if (isDependabot) {
+              const branchName = pull['head']['ref'] 
+              const pull_number = pull['number']
+              vaildBranch = branch.startsWith('dependabot') || (branchName == '${{ github.event.inputs.combineBranchName }}')
+              if (validBranch) {
+                if (branchName.startsWith('dependabot')) {
                   await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
                   owner,
                   repo,
@@ -48,20 +46,20 @@ jobs:
                 });
               }
             }
+            return branchName
 
       # send message to slack respected channel to notify a dependabot PR has auto merged. 
-      - uses: actions/checkout@v2
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: repo,workflow,job,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `${process.env.AS_REPO}\n${process.env.AS_WORKFLOW} by ${process.env.AS_AUTHOR}\n${{ job.status }} in ${process.env.AS_TOOK}`,
+              }]
+            }
         env:
-          SLACK_WEBHOOK: '${{ secrets.SLACK_WEBHOOK }}'
-          SLACK_TITLE: 'ATTENTION: Dependabot auto-merge triggered'
-          SLACK_MESSAGE: 'Ready to merge!'
-          SLACK_COLOR: '#F32013'
-          SLACK_USERNAME: 'Dependabot'
-
-
-
-
-
-   
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() 
