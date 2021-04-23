@@ -31,15 +31,17 @@ jobs:
             for (const pull of pulls) {
               const branchName = pull['head']['ref'] 
               const pull_number = pull['number']
-              if (github.actor == 'dependabot[bot]' || branchName == '${{ github.event.inputs.combineBranchName }}') {
-                await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
+              const isDependabot = (github.actor == 'dependabot[bot]')     
+              if (isDependabot || branchName == '${{ github.event.inputs.combineBranchName }}) {
+                if (isDependabot) {
+                  await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
                   owner,
                   repo,
                   pull_number,
                   event: 'APPROVE'
-                });
-
-                await github.request('PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge', {
+                });      
+              }           
+              await github.request('PUT /repos/{owner}/{repo}/pulls/{pull_number}/merge', {
                   owner,
                   repo,
                   pull_number,
