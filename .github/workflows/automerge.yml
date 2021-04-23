@@ -1,7 +1,5 @@
 name: "Dependabot Automerge"
 on: 
-  pull_request:
-    types: [opened]
   schedule:
     - cron: '40 13 * * *'
   workflow_dispatch:
@@ -55,7 +53,7 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: 'Jasmine Pate'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK: '${{ secrets.SLACK_WEBHOOK }}'
           SLACK_TITLE: 'ATTENTION: Dependabot auto-merge triggered'
           SLACK_COLOR: '#F32013'
           SLACK_USERNAME: 'Dependabot'
