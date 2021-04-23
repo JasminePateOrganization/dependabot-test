@@ -27,9 +27,11 @@ jobs:
             });
 
             for (const pull of pulls) {
-              const branchName = pull['head']['ref'] 
-              const pull_number = pull['number']
-              const isDependabot = (github.actor == 'dependabot[bot]')     
+              const branchName = pull['head']['ref'];
+              const pull_number = pull['number'];
+              const isDependabot = (github.actor == 'dependabot[bot]');
+              console.log('github.actor', github.actor);
+              console.log('isDependabot', isDependabot);
               if (isDependabot || branchName == '${{ github.event.inputs.combineBranchName }}') {
                 if (isDependabot) {
                   await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
@@ -52,7 +54,6 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: 'Jasmine Pate'
           SLACK_WEBHOOK: '${{ secrets.SLACK_WEBHOOK }}'
           SLACK_TITLE: 'ATTENTION: Dependabot auto-merge triggered'
           SLACK_MESSAGE: 'Ready to merge!'
