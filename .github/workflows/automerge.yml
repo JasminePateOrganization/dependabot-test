@@ -60,7 +60,7 @@ jobs:
               icon_emoji: ':warning:',
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `Action Required :exclamation: \nSecurity vulnerabilities auto-merged and ready for deployment.\n${process.env.AS_REPO}\n${process.env.AS_WORKFLOW} - ${{ job.status }} in ${process.env.AS_TOOK}`,
+                text: `Action Required:exclamation:\n Security vulnerabilities auto-merged and ready for deployment.\n${process.env.AS_REPO} - ${{ job.status }} in ${process.env.AS_TOOK}`,
               }]
             }
         env:
