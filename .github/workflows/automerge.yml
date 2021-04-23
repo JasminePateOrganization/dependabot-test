@@ -55,6 +55,7 @@ jobs:
           SLACK_CHANNEL: 'Jasmine Pate'
           SLACK_WEBHOOK: '${{ secrets.SLACK_WEBHOOK }}'
           SLACK_TITLE: 'ATTENTION: Dependabot auto-merge triggered'
+          SLACK_MESSAGE: 'Ready to merge!'
           SLACK_COLOR: '#F32013'
           SLACK_USERNAME: 'Dependabot'
 
