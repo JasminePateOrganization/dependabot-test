@@ -29,7 +29,7 @@ jobs:
             for (const pull of pulls) {
               const branchName = pull['head']['ref'] 
               const pull_number = pull['number']
-              vaildBranch = branchName.startsWith('dependabot') || (branchName == '${{ github.event.inputs.combineBranchName }}')
+              const validBranch = branchName.startsWith('dependabot') || (branchName == '${{ github.event.inputs.combineBranchName }}')
               if (validBranch) {
                 if (branchName.startsWith('dependabot')) {
                   await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
