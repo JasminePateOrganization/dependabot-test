@@ -56,9 +56,9 @@ jobs:
           fields: repo,workflow,job,author,took
           custom_payload: |
             {
+              username: 'Dependabot',
+              icon_emoji: ':warning:',
               attachments: [{
-                username: 'Dependabot',
-                icon_emoji: ':warning:',
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 text: `Action Required! Security vulnerabilities ready for deployment.\n${process.env.AS_REPO}\n${process.env.AS_WORKFLOW} - ${{ job.status }} in ${process.env.AS_TOOK}`,
               }]
