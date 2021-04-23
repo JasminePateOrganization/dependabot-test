@@ -25,9 +25,10 @@ jobs:
               owner,
               repo
             });
+            let branchName;
 
             for (const pull of pulls) {
-              const branchName = pull['head']['ref'] 
+              branchName = pull['head']['ref'] 
               const pull_number = pull['number']
               const validBranch = branchName.startsWith('dependabot') || (branchName == '${{ github.event.inputs.combineBranchName }}')
               if (validBranch) {
