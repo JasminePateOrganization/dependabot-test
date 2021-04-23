@@ -32,7 +32,7 @@ jobs:
               const branchName = pull['head']['ref'] 
               const pull_number = pull['number']
               const isDependabot = (github.actor == 'dependabot[bot]')     
-              if (isDependabot || branchName == '${{ github.event.inputs.combineBranchName }}) {
+              if (isDependabot || branchName == '${{ github.event.inputs.combineBranchName }}') {
                 if (isDependabot) {
                   await github.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews', {
                   owner,
