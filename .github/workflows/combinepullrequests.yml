@@ -4,7 +4,7 @@ name: 'Combine PRs'
 on:
   schedule:
     # default branch at 10am UTC every Sunday
-    - cron: '35 13 * * *'
+    - cron: '00 12 * * *'
   workflow_dispatch:
     inputs:
       branchPrefix:
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/github-script@v3
         id: fetch-branch-names
         name: Fetch branch names
-        with:
+        with: 
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
             const pulls = await github.paginate('GET /repos/:owner/:repo/pulls', {
@@ -70,7 +70,8 @@ jobs:
             }
 
             if (branches.length == 0) {
-              core.setFailed('No PRs/branches matched criteria');
+              console.log('No PRs/branches matched criteria');
+              core.setOutput('prs-to-merge', 0);
               return;
             }
 
@@ -91,6 +92,8 @@ jobs:
           BASE_BRANCH: ${{ steps.fetch-branch-names.outputs.base-branch }}
           BRANCHES_TO_COMBINE: ${{ steps.fetch-branch-names.outputs.result }}
           COMBINE_BRANCH_NAME: ${{ github.event.inputs.combineBranchName }}
+          PRS_TO_MERGE: ${{ steps.fetch-branch-names.outputs.prs-to-merge }}
+        if: ${{ PRS_TO_MERGE > 0 }}
         run: |
           echo "${{steps.fetch-branch-names.outputs.result}}"
           sourcebranches="${BRANCHES_TO_COMBINE%\"}"
@@ -110,6 +113,7 @@ jobs:
       # Creates a PR with the new combined branch
       - uses: actions/github-script@v3
         name: Create Combined Pull Request
+        if: ${{ PRS_TO_MERGE > 0 }}
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
@@ -126,6 +130,7 @@ jobs:
       # close all previously created PRs
       - uses: actions/github-script@v3
         name: Close Single Pull Requests
+        if: ${{ PRS_TO_MERGE > 0 }}
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: | 
