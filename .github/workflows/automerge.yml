@@ -1,7 +1,7 @@
 name: "Dependabot Automerge"
 on: 
   schedule:
-    - cron: '40 13 * * *'
+    - cron: '00 13 * * *'
   workflow_dispatch:
     inputs:
       combineBranchName:
@@ -16,6 +16,7 @@ jobs:
     # get the names of the pull requests to merge
       - uses: actions/github-script@v3
         name: Auto Merge Dependabot Pull Requests
+        id: mergePullRequests
         with:
           github-token: ${{secrets.DEPENDABOT_TOKEN}}
           script: |
@@ -47,10 +48,14 @@ jobs:
                 });
               }
             }
+            
+            core.setOutput('pullRequestLength', pulls.length);
+            return
 
       # send message to slack respected channel to notify a dependabot PR has auto merged. 
       - uses: 8398a7/action-slack@v3
         name: Slack Notification
+        if: ${{steps.mergePullRequests.outputs.pullRequestLength > 0}}
         with:
           status: custom
           fields: repo,workflow,job,author,took,commit
