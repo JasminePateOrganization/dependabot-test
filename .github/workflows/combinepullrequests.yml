@@ -93,8 +93,7 @@ jobs:
           BASE_BRANCH: ${{ steps.fetch-branch-names.outputs.base-branch }}
           BRANCHES_TO_COMBINE: ${{ steps.fetch-branch-names.outputs.result }}
           COMBINE_BRANCH_NAME: ${{ github.event.inputs.combineBranchName }}
-          PRS_TO_MERGE: ${{ steps.fetch-branch-names.outputs.prs-to-merge }}
-        if: ${{ PRS_TO_MERGE > 0 }}
+        if: ${{ steps.fetch-branch-names.outputs.prs-to-merge > 0 }}
         run: |
           echo "${{steps.fetch-branch-names.outputs.result}}"
           sourcebranches="${BRANCHES_TO_COMBINE%\"}"
