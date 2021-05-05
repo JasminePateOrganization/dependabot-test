@@ -55,7 +55,6 @@ jobs:
       # send message to slack respected channel to notify a dependabot PR has auto merged. 
       - uses: 8398a7/action-slack@v3
         name: Slack Notification
-        if: ${{steps.mergePullRequests.outputs.pullRequestLength > 0}}
         with:
           status: custom
           fields: repo,workflow,job,author,took,commit
