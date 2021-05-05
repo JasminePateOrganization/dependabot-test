@@ -14,7 +14,7 @@
     "bluebird": "3.5.3",
     "config": "3.0.1",
     "elasticsearch": "15.3.0",
-    "lodash": "4.17.19",
+    "lodash": "4.17.11",
     "moment": "2.23.0",
     "pino": "5.10.6",
     "pino-tee": "0.2.2",
@@ -22,21 +22,21 @@
     "proxy-agent": "3.0.3",
     "stdio": "0.2.7",
     "uuid": "3.3.2",
-    "pino-pretty": "^2.5.0"
+    "pino-pretty": "2.5.0"
   },
   "devDependencies": {
-    "@sparkpost/msys-test-suite": "^4.0.0",
-    "auditmated": "^0.1.2",
-    "chai": "^4.2.0",
-    "eslint": "^5.10.0",
-    "eslint-config-sparkpost": "^1.6.0",
-    "lerna": "^3.10.5",
-    "lint-staged": "^8.1.0",
-    "mocha": "^5.2.0",
-    "nyc": "^13.1.0",
-    "proxyquire": "^2.1.0",
-    "sinon": "^7.2.2",
-    "sinon-chai": "^3.3.0"
+    "@sparkpost/msys-test-suite": "4.0.0",
+    "auditmated": "0.1.2",
+    "chai": "4.2.0",
+    "eslint": "5.10.0",
+    "eslint-config-sparkpost": "1.6.0",
+    "lerna": "3.10.5",
+    "lint-staged": "8.1.0",
+    "mocha": "5.2.0",
+    "nyc": "13.1.0",
+    "proxyquire": "2.1.0",
+    "sinon": "7.2.2",
+    "sinon-chai": "3.3.0"
   },
   "scripts": {
     "test": "mocha"
