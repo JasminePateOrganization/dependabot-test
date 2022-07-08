@@ -15,7 +15,7 @@
     "config": "3.0.1",
     "elasticsearch": "15.3.0",
     "lodash": "4.17.21",
-    "moment": "2.23.0",
+    "moment": "2.29.4",
     "pino": "5.10.6",
     "pino-tee": "0.2.2",
     "prompts": "2.0.1",
